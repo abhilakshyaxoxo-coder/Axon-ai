@@ -1,26 +1,40 @@
-const { Together } = require('together-ai');
+const { HfInference } = require('@huggingface/inference');
 
 exports.handler = async (event) => {
-  if (event.httpMethod !== "POST") return { statusCode: 405, body: "Method Not Allowed" };
+  // Only allow POST requests
+  if (event.httpMethod !== "POST") {
+    return { statusCode: 405, body: "Method Not Allowed" };
+  }
+
   try {
     const { topic, tone } = JSON.parse(event.body);
-    const client = new Together({ apiKey: process.env.TOGETHER_API_KEY });
+    
+    // This connects to the token you saved in Netlify
+    const hf = new HfInference(process.env.HUGGINGFACE_TOKEN);
 
-    const result = await client.chat.completions.create({
-      model: "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
+    const response = await hf.chatCompletion({
+      model: "meta-llama/Meta-Llama-3-8B-Instruct",
       messages: [
-        { role: "system", content: "You are a world-class Screenwriter. Adapt the topic into a cinematic pitch. Tone: " + tone },
-        { role: "user", content: "Topic: " + topic }
+        { 
+          role: "system", 
+          content: `You are a cinematic screenwriter. Adapt the academic topic into a professional movie pitch. 
+          Format with headers: Logline, Setting, Protagonist, Inciting Incident, Narrative Summary, Final Shot. 
+          Tone: ${tone}. Max 180 words.` 
+        },
+        { role: "user", content: `Topic: ${topic}` }
       ],
-      max_tokens: 400
+      max_tokens: 500,
+      temperature: 0.7
     });
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ pitch: result.choices[0].message.content })
+      body: JSON.stringify({ pitch: response.choices[0].message.content })
     };
   } catch (e) {
-    return { statusCode: 500, body: JSON.stringify({ error: e.message }) };
+    return { 
+      statusCode: 500, 
+      body: JSON.stringify({ error: "HF Brain Error: " + e.message }) 
+    };
   }
 };
-
