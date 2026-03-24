@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AXON | Cinematic Academic Narratives</title>
     <style>
-        /* --- RESEARCH-BACKED COLOR PALETTE & CSS --- */
+        /* --- RESEARCH-BACKED COLOR PALETTE --- */
         :root[data-theme="light"] {
             --bg: #F8FAFC;
             --card-bg: #FFFFFF;
@@ -30,14 +30,13 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
             background-color: var(--bg);
             color: var(--text);
-            line-height: 1.6;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -47,83 +46,54 @@
         /* --- NAVIGATION --- */
         nav {
             width: 100%;
-            max-width: 1000px;
+            max-width: 800px;
             padding: 1.5rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 900;
-            letter-spacing: -1.5px;
-            text-transform: uppercase;
-        }
+        .logo { font-size: 1.5rem; font-weight: 900; letter-spacing: -1px; }
 
         #theme-toggle {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            padding: 0.5rem;
+            padding: 0.6rem;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             box-shadow: 0 4px 6px var(--shadow);
         }
 
-        /* --- MAIN CONTENT --- */
+        /* --- MAIN CONTAINER --- */
         .container {
             width: 90%;
-            max-width: 650px;
-            margin: 4rem 0;
+            max-width: 600px;
+            flex-grow: 1;
+            margin-top: 3rem;
             text-align: center;
         }
 
-        header h1 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            line-height: 1.1;
-        }
+        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; line-height: 1.1; }
+        .accent { color: var(--accent); }
+        header p { color: var(--secondary); margin-bottom: 2.5rem; }
 
-        .accent {
-            color: var(--accent);
-        }
-
-        header p {
-            color: var(--secondary);
-            font-size: 1.1rem;
-            margin-bottom: 3rem;
-        }
-
-        /* --- INPUT SECTION --- */
+        /* --- INPUT CARD --- */
         .input-card {
             background: var(--card-bg);
-            padding: 2.5rem;
-            border-radius: 24px;
+            padding: 2rem;
+            border-radius: 20px;
             border: 1px solid var(--border);
-            box-shadow: 0 20px 40px var(--shadow);
-        }
-
-        .field-group {
-            margin-bottom: 1.5rem;
+            box-shadow: 0 15px 30px var(--shadow);
             text-align: left;
         }
 
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
+        .field { margin-bottom: 1.2rem; }
+        label { display: block; font-weight: 700; font-size: 0.8rem; margin-bottom: 0.4rem; color: var(--secondary); }
 
         input, select {
             width: 100%;
-            padding: 1rem;
-            border-radius: 12px;
+            padding: 0.8rem;
+            border-radius: 10px;
             border: 1px solid var(--border);
             background: var(--bg);
             color: var(--text);
@@ -131,60 +101,58 @@
             outline: none;
         }
 
-        input:focus {
-            border-color: var(--accent);
-        }
+        input:focus { border-color: var(--accent); }
 
         #generate-btn {
             width: 100%;
-            padding: 1.2rem;
+            padding: 1rem;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             background: var(--text);
             color: var(--bg);
-            font-size: 1.1rem;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
+            font-size: 1rem;
             margin-top: 1rem;
         }
 
-        #generate-btn:hover {
-            transform: translateY(-2px);
-            opacity: 0.9;
-        }
+        #generate-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-        /* --- OUTPUT SECTION --- */
+        /* --- OUTPUT AREA --- */
         #output-area {
-            margin-top: 3rem;
-            padding: 2rem;
+            margin-top: 2.5rem;
+            padding: 1.5rem;
             background: var(--card-bg);
-            border-radius: 24px;
-            border-left: 5px solid var(--accent);
+            border-radius: 15px;
+            border-left: 4px solid var(--accent);
             text-align: left;
             display: none;
             box-shadow: 0 10px 20px var(--shadow);
+            white-space: pre-wrap;
         }
 
-        .hidden { display: none; }
-
         .loader {
+            display: none;
+            margin: 2rem auto;
             border: 3px solid var(--border);
             border-top: 3px solid var(--accent);
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
+            width: 30px; height: 30px;
             animation: spin 1s linear infinite;
-            margin: 2rem auto;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 2rem;
+            color: var(--secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
         }
 
-        @media (max-width: 600px) {
-            header h1 { font-size: 2rem; }
-            .input-card { padding: 1.5rem; }
+        @media (max-width: 500px) {
+            header h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
@@ -192,27 +160,25 @@
 
     <nav>
         <div class="logo">AXON</div>
-        <button id="theme-toggle" title="Toggle Light/Dark Mode">
-            <span id="theme-icon">🌙</span>
-        </button>
+        <button id="theme-toggle"><span id="theme-icon">🌙</span></button>
     </nav>
 
     <main class="container">
         <header>
             <h1>Academic Topics,<br><span class="accent">Cinematic Soul.</span></h1>
-            <p>The Llama 4 powered bridge between data and drama.</p>
+            <p>Powered by Llama 4 Maverick</p>
         </header>
 
         <section class="input-card">
-            <div class="field-group">
-                <label>ACADEMIC TOPIC</label>
-                <input type="text" id="topic-input" placeholder="e.g. The Second Law of Thermodynamics">
+            <div class="field">
+                <label>RESEARCH TOPIC</label>
+                <input type="text" id="topic-input" placeholder="e.g. Quantum Entanglement">
             </div>
 
-            <div class="field-group">
+            <div class="field">
                 <label>NARRATIVE TONE</label>
                 <select id="tone-input">
-                    <option value="Epic/Orchestral">Epic/Orchestral</option>
+                    <option value="Epic">Epic/Orchestral</option>
                     <option value="Gritty Noir">Gritty Noir</option>
                     <option value="Sci-Fi Thriller">Sci-Fi Thriller</option>
                     <option value="Whimsical Pixar-style">Whimsical Pixar-style</option>
@@ -222,66 +188,62 @@
             <button id="generate-btn">GENERATE PITCH</button>
         </section>
 
-        <div id="loader-container" class="hidden">
-            <div class="loader"></div>
-            <p style="text-align: center;">Processing through Llama 4 Maverick...</p>
-        </div>
+        <div class="loader" id="loader"></div>
 
-        <section id="output-area">
-            <div id="pitch-result"></div>
-        </section>
+        <section id="output-area"></section>
     </main>
 
-    <script>
-        // --- VANILLA JS LOGIC ---
+    <footer>
+        Developed by Abhi Lakshya &copy; 2026
+    </footer>
 
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
+    <script>
         const html = document.documentElement;
+        const themeBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
         const generateBtn = document.getElementById('generate-btn');
         const outputArea = document.getElementById('output-area');
-        const loader = document.getElementById('loader-container');
-        const resultDiv = document.getElementById('pitch-result');
+        const loader = document.getElementById('loader');
 
-        // 1. Theme Toggle Logic
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            
-            html.setAttribute('data-theme', newTheme);
-            themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
+        // Theme Toggle
+        themeBtn.addEventListener('click', () => {
+            const isDark = html.getAttribute('data-theme') === 'dark';
+            html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            themeIcon.textContent = isDark ? '🌙' : '☀️';
         });
 
-        // 2. Mock Pipeline (Connection Logic)
+        // ML Brain Connection
         generateBtn.addEventListener('click', async () => {
             const topic = document.getElementById('topic-input').value;
             const tone = document.getElementById('tone-input').value;
 
-            if (!topic) {
-                alert("Please enter a topic first!");
-                return;
-            }
+            if (!topic) return alert("Enter a topic first!");
 
-            // UI Transitions
+            // UI State: Loading
             generateBtn.disabled = true;
-            generateBtn.innerText = "PROCESSING...";
+            generateBtn.innerText = "THINKING...";
             outputArea.style.display = 'none';
-            loader.classList.remove('hidden');
+            loader.style.display = 'block';
 
-            // This is where you will eventually fetch from your Together AI / Netlify Function
-            // For now, it simulates the "Weightless" process time
-            setTimeout(() => {
-                loader.classList.add('hidden');
+            try {
+                // Connecting to Netlify Function Brain
+                const response = await fetch('/.netlify/functions/generate-pitch', {
+                    method: 'POST',
+                    body: JSON.stringify({ topic, tone })
+                });
+
+                const data = await response.json();
+                
+                loader.style.display = 'none';
                 outputArea.style.display = 'block';
+                outputArea.innerText = data.pitch || "Error: Could not reach Llama 4.";
+            } catch (err) {
+                loader.style.display = 'none';
+                alert("Connection failed. Check your Netlify logs!");
+            } finally {
                 generateBtn.disabled = false;
                 generateBtn.innerText = "GENERATE PITCH";
-
-                resultDiv.innerHTML = `
-                    <h3 style="margin-bottom: 1rem; color: var(--accent);">Pitch Draft: ${topic}</h3>
-                    <p style="font-style: italic; color: var(--secondary); margin-bottom: 1rem;">Tone: ${tone}</p>
-                    <p><i>Note: To see the actual Llama 4 output, connect this frontend to your Python backend/API.</i></p>
-                `;
-            }, 1500);
+            }
         });
     </script>
 </body>
