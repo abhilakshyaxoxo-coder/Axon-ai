@@ -1,7 +1,6 @@
 {
   "name": "axon-ai",
   "dependencies": {
-    "together-ai": "^0.6.0"
+    "@huggingface/inference": "^2.6.4"
   }
 }
-
