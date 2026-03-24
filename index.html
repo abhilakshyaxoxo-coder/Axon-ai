@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXON | Cinematic Academic Narratives</title>
+    <style>
+        /* --- RESEARCH-BACKED COLOR PALETTE & CSS --- */
+        :root[data-theme="light"] {
+            --bg: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text: #003366; /* RPTH Deep Blue - Trust Score > 10 */
+            --accent: #FFC325; /* High-contrast Yellow */
+            --secondary: #64748B;
+            --border: #E2E8F0;
+            --shadow: rgba(0, 51, 102, 0.1);
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #0F172A;
+            --card-bg: #1E293B;
+            --text: #F1F5F9;
+            --accent: #FFC325;
+            --secondary: #94A3B8;
+            --border: #334155;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            width: 100%;
+            max-width: 1000px;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            text-transform: uppercase;
+        }
+
+        #theme-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        /* --- MAIN CONTENT --- */
+        .container {
+            width: 90%;
+            max-width: 650px;
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .accent {
+            color: var(--accent);
+        }
+
+        header p {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        /* --- INPUT SECTION --- */
+        .input-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 40px var(--shadow);
+        }
+
+        .field-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--accent);
+        }
+
+        #generate-btn {
+            width: 100%;
+            padding: 1.2rem;
+            border: none;
+            border-radius: 12px;
+            background: var(--text);
+            color: var(--bg);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        #generate-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        /* --- OUTPUT SECTION --- */
+        #output-area {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 24px;
+            border-left: 5px solid var(--accent);
+            text-align: left;
+            display: none;
+            box-shadow: 0 10px 20px var(--shadow);
+        }
+
+        .hidden { display: none; }
+
+        .loader {
+            border: 3px solid var(--border);
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 2rem; }
+            .input-card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">AXON</div>
+        <button id="theme-toggle" title="Toggle Light/Dark Mode">
+            <span id="theme-icon">🌙</span>
+        </button>
+    </nav>
+
+    <main class="container">
+        <header>
+            <h1>Academic Topics,<br><span class="accent">Cinematic Soul.</span></h1>
+            <p>The Llama 4 powered bridge between data and drama.</p>
+        </header>
+
+        <section class="input-card">
+            <div class="field-group">
+                <label>ACADEMIC TOPIC</label>
+                <input type="text" id="topic-input" placeholder="e.g. The Second Law of Thermodynamics">
+            </div>
+
+            <div class="field-group">
+                <label>NARRATIVE TONE</label>
+                <select id="tone-input">
+                    <option value="Epic/Orchestral">Epic/Orchestral</option>
+                    <option value="Gritty Noir">Gritty Noir</option>
+                    <option value="Sci-Fi Thriller">Sci-Fi Thriller</option>
+                    <option value="Whimsical Pixar-style">Whimsical Pixar-style</option>
+                </select>
+            </div>
+
+            <button id="generate-btn">GENERATE PITCH</button>
+        </section>
+
+        <div id="loader-container" class="hidden">
+            <div class="loader"></div>
+            <p style="text-align: center;">Processing through Llama 4 Maverick...</p>
+        </div>
+
+        <section id="output-area">
+            <div id="pitch-result"></div>
+        </section>
+    </main>
+
+    <script>
+        // --- VANILLA JS LOGIC ---
+
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+        const generateBtn = document.getElementById('generate-btn');
+        const outputArea = document.getElementById('output-area');
+        const loader = document.getElementById('loader-container');
+        const resultDiv = document.getElementById('pitch-result');
+
+        // 1. Theme Toggle Logic
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            html.setAttribute('data-theme', newTheme);
+            themeIcon.textContent = newTheme === 'light' ? '🌙' : '☀️';
+        });
+
+        // 2. Mock Pipeline (Connection Logic)
+        generateBtn.addEventListener('click', async () => {
+            const topic = document.getElementById('topic-input').value;
+            const tone = document.getElementById('tone-input').value;
+
+            if (!topic) {
+                alert("Please enter a topic first!");
+                return;
+            }
+
+            // UI Transitions
+            generateBtn.disabled = true;
+            generateBtn.innerText = "PROCESSING...";
+            outputArea.style.display = 'none';
+            loader.classList.remove('hidden');
+
+            // This is where you will eventually fetch from your Together AI / Netlify Function
+            // For now, it simulates the "Weightless" process time
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                outputArea.style.display = 'block';
+                generateBtn.disabled = false;
+                generateBtn.innerText = "GENERATE PITCH";
+
+                resultDiv.innerHTML = `
+                    <h3 style="margin-bottom: 1rem; color: var(--accent);">Pitch Draft: ${topic}</h3>
+                    <p style="font-style: italic; color: var(--secondary); margin-bottom: 1rem;">Tone: ${tone}</p>
+                    <p><i>Note: To see the actual Llama 4 output, connect this frontend to your Python backend/API.</i></p>
+                `;
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
