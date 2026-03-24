@@ -1,0 +1,7 @@
+{
+  "name": "axon-ai",
+  "dependencies": {
+    "together-ai": "^0.6.0"
+  }
+}
+
