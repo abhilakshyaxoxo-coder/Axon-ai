@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SciScript AI | Cinematic Synthesis</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+:root[data-theme="dark"] {
+    --bg-base: #0B101B;
+    --text-primary: #E0E6ED;
+    --accent-cyan: #00F2FF;
+    --accent-hover: #00c3cc;
+    --glass-bg: rgba(11, 16, 27, 0.65);
+    --glass-border: rgba(0, 242, 255, 0.2);
+    --grid-line: rgba(0, 242, 255, 0.05);
+    --input-bg: rgba(0, 0, 0, 0.4);
+}
+
+:root[data-theme="light"] {
+    --bg-base: #F4F7FA;
+    --text-primary: #0B101B;
+    --accent-cyan: #005BB5;
+    --accent-hover: #003F82;
+    --glass-bg: rgba(255, 255, 255, 0.75);
+    --glass-border: rgba(11, 16, 27, 0.15);
+    --grid-line: rgba(11, 16, 27, 0.05);
+    --input-bg: rgba(255, 255, 255, 0.9);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    font-family: 'Space Mono', monospace;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    position: relative;
+}
+
+.grid-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: 
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 30px 30px;
+    z-index: -1;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    padding: 2.5rem;
+    border-radius: 12px;
+}
+
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 1rem;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.cyber-cyan {
+    color: var(--accent-cyan);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--accent-cyan);
+    border: 1px solid var(--accent-cyan);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.btn-outline:hover {
+    background: var(--accent-cyan);
+    color: var(--bg-base);
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.row {
+    display: flex;
+    gap: 1.5rem;
+}
+
+label {
+    font-size: 0.8rem;
+    color: var(--accent-cyan);
+}
+
+input, select {
+    width: 100%;
+    padding: 0.8rem;
+    background: var(--input-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+}
+
+.btn-primary {
+    width: 100%;
+    background: var(--accent-cyan);
+    padding: 1rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.output-container {
+    margin-top: 2rem;
+}
+
+#output {
+    padding: 1.5rem;
+    background: var(--input-bg);
+    min-height: 200px;
+    white-space: pre-wrap;
+}
+
+footer {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.hidden { display: none; }
+
+.spinner {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border: 2px solid var(--accent-cyan);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 600px) {
+    .row { flex-direction: column; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="grid-overlay"></div>
+
+<div class="container glass-panel">
+<header>
+    <div class="logo">
+        <span class="cyber-cyan">&lt;</span> SciScript AI <span class="cyber-cyan">/&gt;</span>
+    </div>
+    <button id="themeToggle" class="btn-outline">Toggle Lab Mode</button>
+</header>
+
+<main>
+    <div class="input-group">
+        <label>Academic Topic</label>
+        <input type="text" id="topic" placeholder="Quantum Entanglement...">
+    </div>
+
+    <div class="row">
+        <div class="input-group">
+            <label>Genre</label>
+            <select id="genre">
+                <option>Cyberpunk</option>
+                <option>Space Opera</option>
+                <option>Sci-Fi Noir</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Tone</label>
+            <select id="tone">
+                <option>Gritty</option>
+                <option>Epic</option>
+                <option>Philosophical</option>
+            </select>
+        </div>
+    </div>
+
+    <button id="generateBtn" class="btn-primary">INITIALIZE SEQUENCE</button>
+
+    <div id="loader" class="hidden">
+        <span class="spinner"></span> Generating...
+    </div>
+
+    <div class="output-container">
+        <pre id="output">System ready...</pre>
+    </div>
+</main>
+
+<footer>
+    Designed by Abhi Lakshya
+</footer>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const themeToggle = document.getElementById("themeToggle");
+    const generateBtn = document.getElementById("generateBtn");
+    const output = document.getElementById("output");
+    const loader = document.getElementById("loader");
+
+    themeToggle.addEventListener("click", () => {
+        const current = document.documentElement.getAttribute("data-theme");
+        document.documentElement.setAttribute("data-theme", current === "dark" ? "light" : "dark");
+    });
+
+    generateBtn.addEventListener("click", async () => {
+        const topic = document.getElementById("topic").value.trim();
+        const genre = document.getElementById("genre").value;
+        const tone = document.getElementById("tone").value;
+
+        if (!topic) {
+            output.textContent = "Enter topic.";
+            return;
+        }
+
+        loader.classList.remove("hidden");
+        output.textContent = "Generating...";
+
+        try {
+            const res = await fetch("http://127.0.0.1:5000/api/generate", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({topic, genre, tone})
+            });
+
+            const data = await res.json();
+            output.textContent = data.script || data.error;
+
+        } catch (e) {
+            output.textContent = "Backend not running.";
+        }
+
+        loader.classList.add("hidden");
+    });
+});
+</script>
+
+</body>
+</html>
