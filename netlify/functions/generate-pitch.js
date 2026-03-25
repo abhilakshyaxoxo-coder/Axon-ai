@@ -1,25 +1,21 @@
 const { HfInference } = require('@huggingface/inference');
 
 exports.handler = async (event) => {
-  // Only allow POST requests
-  if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: "Method Not Allowed" };
-  }
+  if (event.httpMethod !== "POST") return { statusCode: 405, body: "Denied" };
 
   try {
     const { topic, tone } = JSON.parse(event.body);
-    
-    // This connects to the token you saved in Netlify
     const hf = new HfInference(process.env.HUGGINGFACE_TOKEN);
 
+    // Swapping to Mistral 7B - No permission required!
     const response = await hf.chatCompletion({
-      model: "meta-llama/Meta-Llama-3-8B-Instruct",
+      model: "mistralai/Mistral-7B-Instruct-v0.3",
       messages: [
         { 
           role: "system", 
-          content: `You are a cinematic screenwriter. Adapt the academic topic into a professional movie pitch. 
-          Format with headers: Logline, Setting, Protagonist, Inciting Incident, Narrative Summary, Final Shot. 
-          Tone: ${tone}. Max 180 words.` 
+          content: `You are the core engine of Axion-AI. Create a cinematic movie pitch. 
+          Format: Logline, Setting, Protagonist, Inciting Incident, Narrative Summary, Final Shot. 
+          Tone: ${tone}. Keep it under 180 words.` 
         },
         { role: "user", content: `Topic: ${topic}` }
       ],
@@ -32,9 +28,6 @@ exports.handler = async (event) => {
       body: JSON.stringify({ pitch: response.choices[0].message.content })
     };
   } catch (e) {
-    return { 
-      statusCode: 500, 
-      body: JSON.stringify({ error: "HF Brain Error: " + e.message }) 
-    };
+    return { statusCode: 500, body: JSON.stringify({ error: "Axion Engine Error: " + e.message }) };
   }
 };
