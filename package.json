@@ -2,6 +2,6 @@
   "name": "axion-ai",
   "version": "1.0.0",
   "dependencies": {
-    "@huggingface/inference": "^2.6.4"
+    "@huggingface/inference": "^4.13.1"
   }
 }
