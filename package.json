@@ -1,6 +1,9 @@
 {
-  "name": "axon-ai",
-  "dependencies": {
-    "@huggingface/inference": "^2.6.4"
-  }
+  "model": "mistralai/Mistral-7B-Instruct-v0.3",
+  "messages": [
+    { "role": "system", "content": "You are the Axion-AI screenwriter..." },
+    { "role": "user", "content": "Topic: [Your Input]" }
+  ],
+  "max_tokens": 500,
+  "temperature": 0.7
 }
