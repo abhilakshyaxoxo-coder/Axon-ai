@@ -29,8 +29,7 @@ Rules:
 `;
 
   try {
-    const res = await fetch(
-      "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3",
+    const res = await fetch("https://corsproxy.io/?https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3",
       {
         method: "POST",
         headers: {
