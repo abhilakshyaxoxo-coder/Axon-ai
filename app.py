@@ -15,7 +15,7 @@ if not HF_API_KEY:
 API_URL = "https://api-inference.huggingface.co/models/Qwen/Qwen2.5-7B-Instruct"
 
 HEADERS = {
-    "Authorization": f"Bearer {}",
+    "Authorization": f"Bearer {HF_API_KEY}",
     "Content-Type": "application/json"
 }
 
