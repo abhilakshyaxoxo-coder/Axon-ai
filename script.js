@@ -3,7 +3,7 @@ const output = document.getElementById("output");
 const copyBtn = document.getElementById("copyBtn");
 
 // ⚠️ Paste your (temporary) token here
-const API_KEY = "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";
+const API_KEY = "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";
 
 btn.addEventListener("click", async () => {
   const topic = document.getElementById("topic").value.trim();
